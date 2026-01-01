@@ -19,7 +19,7 @@ const VideoDetailsPage = () => {
             const params = new URLSearchParams();
             params.append('videoUrlOrId', videoUrlOrId);
 
-            const response = await axios.post('http://localhost:8080/youtube/video-details', params, {
+            const response = await axios.post('https://saas-product-63r6.onrender.com/youtube/video-details', params, {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
