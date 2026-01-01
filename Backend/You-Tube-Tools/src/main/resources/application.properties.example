@@ -1,16 +1,11 @@
-# Project Name
 spring.application.name=You-Tube-Tools
 server.port=8080
 
-# YouTube API Configuration (Asli key yahan mat daalna)
 youtube.api.key=YOUR_ACTUAL_API_KEY_HERE
 youtube.api.base.url=https://www.googleapis.com/youtube/v3
 youtube.api.search.url=${youtube.api.base.url}/search
 youtube.api.videos.url=${youtube.api.base.url}/videos
 
-# Metadata Settings
 youtube.api.max.related.videos=10
 
-# CORS Configuration (Production ke liye zaruri hai)
-# Local: http://localhost:3000 | Live: https://your-app.vercel.app
 allowed.origin=http://localhost:3000
