@@ -15,7 +15,7 @@ const Thumbnails = () => {
         setThumbnailData(null);
 
         try {
-            const response = await axios.post('http://localhost:8080/get-thumbnail', null, {
+            const response = await axios.post('https://saas-product-63r6.onrender.com/get-thumbnail', null, {
                 params: { videoUrlOrId: videoUrlOrId }
             });
             setThumbnailData(response.data);

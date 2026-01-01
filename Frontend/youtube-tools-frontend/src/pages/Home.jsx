@@ -13,7 +13,7 @@ const Home = () => {
         setLoading(true);
         setData(null);
         try {
-            const response = await axios.post('http://localhost:8080/youtube/search', null, {
+            const response = await axios.post('https://saas-product-63r6.onrender.com/youtube/search', null, {
                 params: { videoTitle: title }
             });
             setData(response.data);
