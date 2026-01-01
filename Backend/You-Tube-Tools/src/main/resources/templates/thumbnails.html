@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube Thumbnail Generator</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- Tailwind Config -->
+  <script>
+    tailwind.config = {
+        darkMode: 'class',
+        theme: {
+            extend: {
+                colors: {
+                    primary: {
+                        500: '#2563eb',
+                        600: '#1d4ed8'
+                    },
+                    accent: '#22c55e'
+                }
+            }
+        }
+    }
+  </script>
+
+  <style>
+    .main-title {
+        background: linear-gradient(90deg, #2563eb, #22c55e);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+
+    .gradient-header {
+        background: linear-gradient(135deg, rgba(37,99,235,.08), rgba(34,197,94,.08));
+        border: 1px dashed #e2e8f0;
+    }
+
+    .thumb-box {
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .error {
+        background: rgba(239, 68, 68, 0.12);
+        color: #ef4444;
+        border-left: 4px solid #ef4444;
+    }
+
+    /* 🔒 Overflow protection */
+    .safe-text {
+        word-break: break-word;
+        overflow-wrap: anywhere;
+    }
+
+    .dark .gradient-header {
+        border-color: #334155;
+    }
+
+    .dark .thumb-box {
+        border-color: #334155;
+    }
+  </style>
+</head>
+
+<body class="bg-slate-50 text-slate-900 min-h-screen dark:bg-slate-900 dark:text-slate-100">
+
+<!-- Navbar -->
+<div th:replace="~{fragments/navbar :: navbar}" th:with="activePage='thumbnails'"></div>
+
+<div class="container mx-auto px-4 max-w-2xl mt-12 pb-12">
+
+  <!-- Header -->
+  <div class="text-center mb-8">
+    <h1 class="main-title text-4xl md:text-5xl font-extrabold mb-4">
+      YouTube Thumbnail Generator
+    </h1>
+    <div class="gradient-header rounded-xl p-4 mt-6">
+      <p class="text-slate-600 dark:text-slate-400 text-lg safe-text">
+        Enter a YouTube video URL or ID to get high resolution thumbnail (1280×720).
+      </p>
+    </div>
+  </div>
+
+  <!-- Form -->
+  <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-lg p-6 mb-8">
+    <form th:action="@{/get-thumbnail}" method="post">
+      <label class="block text-sm font-medium mb-2">
+        YouTube Video URL or ID
+      </label>
+
+      <input type="text"
+             name="videoUrlOrId"
+             required
+             class="w-full px-4 py-3 mb-4 rounded-lg border border-slate-300
+                          dark:border-slate-600 bg-white dark:bg-slate-700
+                          focus:border-blue-500 focus:ring-2 focus:ring-blue-200
+                          dark:focus:ring-blue-800 safe-text">
+
+      <button type="submit"
+              class="bg-blue-600 hover:bg-blue-700 text-white font-medium
+                           py-3 px-6 rounded-lg shadow-lg transition-colors">
+        Get Thumbnail
+      </button>
+    </form>
+
+    <!-- Error -->
+    <div th:if="${error}" class="error rounded-lg p-4 mt-4 safe-text" th:text="${error}"></div>
+  </div>
+
+  <!-- Result -->
+  <div th:if="${thumbnailUrl}"
+       class="bg-white dark:bg-slate-800 rounded-2xl border
+                border-slate-200 dark:border-slate-700 shadow-lg p-6 mb-8">
+
+    <h2 class="text-xl font-semibold mb-4 safe-text">
+      High Quality Thumbnail (1280×720)
+    </h2>
+
+    <div class="flex justify-end mb-4">
+      <button type="button"
+              onclick="downloadImage('[[${thumbnailUrl}]]','youtube-thumbnail-[[${videoId}]].jpg')"
+              class="bg-blue-600 hover:bg-blue-700 text-white font-medium
+                           py-2 px-4 rounded-lg transition-colors">
+        <i class="bi bi-download"></i> Download
+      </button>
+    </div>
+
+    <div class="thumb-box p-3">
+      <img th:src="${thumbnailUrl}"
+           alt="YouTube thumbnail high quality"
+           class="w-full h-auto block rounded-lg"
+           onerror="this.onerror=null;
+                          this.src='https://via.placeholder.com/1280x720?text=Thumbnail+Not+Available';">
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function downloadImage(url, filename) {
+      fetch(url)
+          .then(res => res.blob())
+          .then(blob => {
+              const link = document.createElement('a');
+              link.href = URL.createObjectURL(blob);
+              link.download = filename;
+              document.body.appendChild(link);
+              link.click();
+              document.body.removeChild(link);
+          })
+          .catch(() => alert('Failed to download thumbnail.'));
+  }
+</script>
+
+</body>
+</html>

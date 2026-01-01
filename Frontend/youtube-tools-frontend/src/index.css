@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* --- GLOBAL RESET: Prevent Horizontal Movement --- */
+html, body {
+  max-width: 100vw;
+  overflow-x: hidden; /* Sabse important line */
+  margin: 0;
+  padding: 0;
+  position: relative;
+  width: 100%;
+  /* Mobile par bouncing effect ko rokhne ke liye */
+  overscroll-behavior-x: none; 
+}
+
+#root {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* --- CUSTOM STYLES --- */
+
+/* Title ka gradient */
+.main-title-gradient {
+  background: linear-gradient(90deg, #2563eb, #22c55e);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: inline-block; /* Gradient wrap fix */
+}
+
+/* Custom Scrollbar for Description Boxes */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  @apply bg-slate-100 dark:bg-slate-800;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  @apply bg-blue-500 rounded-full;
+}
+
+/* --- RESPONSIVE ADJUSTMENTS --- */
+
+@layer utilities {
+  .container {
+    /* Container ko screen ke bahar jane se rokta hai */
+    max-width: 100%; 
+    @apply mx-auto;
+  }
+}
+
+/* iPhone SE (Chhote screens) ke liye specific optimization */
+@media (max-width: 380px) {
+  .main-title-gradient {
+    font-size: 1.75rem; /* text-3xl se thoda chhota */
+    line-height: 2.1rem;
+    padding: 0 4px;
+  }
+  
+  .container {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  /* Inputs aur Buttons ko chhota karein taaki overflow na ho */
+  input, button {
+    font-size: 0.85rem !important;
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+
+  /* Tags ko forcefully wrap karein */
+  span {
+    word-break: break-all;
+    white-space: normal;
+  }
+}
