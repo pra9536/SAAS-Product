@@ -10,7 +10,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     // Ye value application.properties se aayegi
     // Agar wahan nahi mili toh default localhost:3000 use karega
-    @Value("${allowed.origin:http://localhost:3000}")
+    @Value("${ALLOWED_ORIGIN:http://localhost:3000}")
     private String allowedOrigin;
 
     @Override
