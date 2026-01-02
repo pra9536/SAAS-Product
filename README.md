@@ -1,5 +1,9 @@
 📺 YouTube SEO Tools (SaaS) :-
 
+<p align="center">
+  <img src="./Frontend/youtube-tools-frontend/public/project-preview.png" alt="Project Preview" width="100%">
+</p>
+
 YouTube SEO Tools is a full-stack SaaS utility designed to help content creators boost their video reach. The application leverages the YouTube Data API v3 to extract hidden metadata and generate SEO-optimized tags to improve search rankings.
 
 🚀 Live Demo :-
